@@ -1,0 +1,11 @@
+INSERT INTO `department` VALUES (107, 'Business School', NULL);
+INSERT INTO `department` VALUES (105, 'Computational Science and Enigneering', NULL);
+INSERT INTO `department` VALUES (106, 'Human Computer Interaction', NULL);
+INSERT INTO `department` VALUES (104, 'Computer Science', NULL);
+INSERT INTO `department` VALUES (108, 'Chemistry', NULL);
+INSERT INTO `department` VALUES (109, 'Material Science', NULL);
+INSERT INTO `department` VALUES (110, 'History and Sociology', NULL);
+INSERT INTO `department` VALUES (111, 'Office of Campus Sustainability', NULL);
+INSERT INTO `department` VALUES (112, 'GT Honors Program', NULL);
+INSERT INTO `department` VALUES (113, 'GT Administration and Finance', NULL);
+INSERT INTO `department` VALUES (114, 'AIA LEED AP', NULL);

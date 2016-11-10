@@ -1,0 +1,243 @@
+body  {
+    font-family: Verdana, sans-serif;
+    margin:15px;
+    border:1;
+}
+
+p,td, ul, ol, li, dl, dt, dd  {
+    font-family: Verdana, sans-serif;
+}
+
+.form.addNew{
+    float:right;
+}
+
+/* add to directory button */
+.button.addNew.submit{
+    position:absolute;
+    right:0%;
+    width:13%;
+    text-align: left;
+    height:32px;
+}
+
+.button.image.addNew{
+    position:absolute;
+    right:13%;
+    padding:7px 2px 7px 7px;
+}
+
+.button.image.addNew, .button.addNew.submit{
+    display:inline-block;
+    background-color: #102647;
+    border: #102647 solid thin;
+    color: white;
+    margin-right:15px;
+}
+
+.button.addNew.submit{
+    position:absolute;
+    right:0px;
+    text-align: left;
+    height:32px;
+    width:165px;
+
+}
+
+.button.image.addNew{
+    position:absolute;
+    right:165px;
+    padding:7px;
+}
+
+/*
+.form.addNew{
+    float:right;
+}
+
+.button.image.addNew, .button.addNew.submit{
+    display:inline-block;
+    background-color: #102647;
+    border: #102647 solid thin;
+    color: white;
+    margin-right:15px;
+}
+
+
+.button.image.addNew + .button.addNew.submit{
+    margin-left: -20px;
+}
+*/
+
+.button.image.addNew, .button.addNew.submit{
+    background-color: #102647;
+    border: #102647 solid thin;
+    color: white;
+    margin-right:15px;
+}
+
+
+/* tableTitle */
+.p.title{
+    font-size:110%;
+    margin-bottom: 0.3em;
+    font-weight:bold;
+    color:#454545;
+}
+
+/* search box and button positons: */
+
+[class="input search"]{
+    height:26px;
+    border:#A9A9A9 solid thin;
+    padding-left: 1%;
+    position:relative;
+    left:25%;
+    width:50%;
+}
+
+[class="input search submit"]{
+    background-color:#A9A9A9;
+    position:absolute;
+    left:73.4%;
+
+}
+
+[class="input search"],[class="input search submit"]{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+/* change the placeholder of search box, actually only works for Chrome */
+[class="input search"]::-webkit-input-placeholder{
+    opacity:0;
+}
+
+[class="input search"]:focus::-webkit-input-placeholder{
+    opacity:1;
+}
+
+[class="input search"]:focus {
+    border:#0000CD solid thin;
+}
+
+
+/* put dropdown menu, filter button, reset button all in one line */
+.dropdown-content, [class="div functionArea button"], [class="div functionArea button reset"]{
+    display:inline-block;
+}
+
+[class="div functionArea button"], [class="input button"], [class="div functionArea button reset"], [class="input button href"]{
+    background-color: #A9A9A9;
+    color:white;
+    text-align:center;
+    height:30px;
+    border:none;
+}
+
+[class="div functionArea button reset"]{
+    float:right;
+    width:10%;
+}
+
+[class="input button href"],[class="input button"]{
+    font-size: 14px;
+    width:100%;
+}
+
+[class="div functionArea button"]{
+    position:absolute;
+    width:10%;
+    right:24%;
+}
+
+/* dropdown menu */
+.dropdown {
+    height:30px;
+    position: relative;
+    display: inline-block;
+    text-align:center;
+    width:20%;
+    margin-bottom: 30px;
+    margin-right:5px;
+    background-color: #DAA520;
+}
+
+.dropdown-content {
+    margin-top:4px;
+    position: absolute;
+    display: none;
+    width:100%;
+    text-align:left;
+}
+
+.dropdown-content div {
+    padding: 5px 10px 5px 10px;
+    border-top: #696969 solid thin;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    background-color: #DAA520;
+}
+
+.img.functionArea.role.filter.name{
+    vertical-align: center;
+}
+
+
+/*
+ Secondary menu
+ Default: nothing to show
+*/
+.dropdown .dropdown-content .subMenu {
+    width: 10em;
+    position: absolute;
+    left: -1000em;
+}
+
+/*
+ Secondary menu
+ When hovering
+*/
+.dropdown .dropdown-content .div:hover .subMenu{
+    left: 100px;
+    display: block;
+    background-color: #DAA520;
+    padding: 6px 16px;
+    border-bottom-width: #696969 solid thin;
+
+}
+
+
+/* directory table */
+table
+{
+    width:100%;
+    border-collapse:collapse;
+    border:#A9A9A9 solid thin;
+    text-align:left;
+}
+
+td,th
+{
+    border:none;
+    border-bottom:#A9A9A9 solid thin;
+    padding:5px 10px 5px 10px;
+}
+
+/* set width of each column in the table:
+.tableHead.columnName, .tableHead.columnRole{width:8%;}
+.tableHead.columnArea, .tableHead.columnDept{width:20%;}
+.tableHead.columnContact{width:18%;}
+.tableHead.columnProject{width:26%;}
+*/
+
+.colorBlock {
+    height: 17px;
+    border: solid;
+    border-width: thin;
+}
+
+
