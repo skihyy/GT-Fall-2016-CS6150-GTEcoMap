@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-    <script src="table.js"></script>
-    <link rel="stylesheet" type="text/css" href="table.css">
-    <title>Sustainability Directory</title>
+    <script src="map.js"></script>
+    <link rel="stylesheet" type="text/css" href="map.css">
+    <title>Sustainability Map</title>
     <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
 </head>
 <!-- after the page is loaded, if some buttons were blue, they should trun to blue again. -->
@@ -17,7 +17,7 @@
  */
 
 // not showing notices or errors
-//error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE);
 
 // basic MySQL connection preparation
 $con = mysqli_init();
@@ -30,18 +30,18 @@ if (!mysqli_real_connect($con, "127.0.0.1", "root", "root", "gt_eco_map", 3306))
     die("Connect Error: " . mysqli_connect_error());
 }
 
-$areaFilter = queryAllSustainAreas($con);
-$areaFilterSelected = null;
+$allAreas = queryAllSustainAreas($con);
+$areaFilterSelected = [];
 
 // if one filters something
 if (!is_null($_REQUEST["todo"])) {
     $areaFilterSelected = $_REQUEST["area"];
 }
 
-$projectList = queryProject($areaFilterSelected);
-$peopleList = queryPropleBasedOnProjects($projectList);
+$projectList = queryProject($areaFilterSelected, $con);
+$peopleList = queryPropleBasedOnProjects($projectList, $con);
 
-printingPage($areaFilterSelected, $areaFilter);
+printingPage($areaFilterSelected, $allAreas);
 
 ////////////////////////////////////////////////////////////////////
 /////////////////            FUNCTIONS                //////////////
@@ -50,39 +50,88 @@ printingPage($areaFilterSelected, $areaFilter);
 /**
  * Printing the web pages. Of course, the map will be printed by JS.
  */
-function printingPage($areaFilterSelected, $areaFilter)
+function printingPage($areaFilterSelected, $allAreas)
 {
-    printingFilters($areaFilterSelected, $areaFilter);
-    printingMapAreas();
+    printTitle();
+    printFilters($areaFilterSelected, $allAreas);
+    printMapAreas();
 }
 
-function printingMapAreas()
+/**
+ * Printing the title and description of the web page.
+ */
+function printTitle()
 {
-?>
-<div class="div map" id="mapDiv">
+    ?>
+    <div id="tableTitle" class="div title">
+        <p id="tableTitleText" class="p title">Campus Sustainability Interactive Map</p>
+    </div>
 
-</div>
-<?php
+    <div id="tableDescription" class="div description">
+        <p id="tableDescriptionText1" class="p description">
+            Campus sustainability interactive map connects between sustainability areas, sustainability projects, and
+            people, who are involved in these projects on GT campus.
+        </p>
+    </div>
+    <?php
+}
+
+/**
+ * Printing the areas for the map.
+ */
+function printMapAreas()
+{
+    ?>
+    <div class="div map" id="mapDiv">
+        <div class="map div title">
+            Sustainability Projects
+        </div>
+        <div class="map div d3Area"></div>
+    </div>
+    <?php
 }
 
 /**
  * Printing the filters.
  */
-function printingFilters($areaFilterSelected, $areaFilter){
+function printFilters($areaFilterSelected, $allAreas){
 ?>
 <div class="filters div" id="filterDiv">
+    <div class="filters div title">
+        Sustainability Area
+    </div>
+    <div class="filters div area" id="sustainSelectAlldiv">
+        <input class="input filter selectAll content-detail" id="sustainSelectAll" value="" type="checkbox"
+               onclick="selectAll(this, 'areaChkList')"
+            <?php
+            if (count($areaFilterSelected) == count($allAreas)) {
+                echo " checked='checked'";
+            }
+            ?>
+        >
+        <label for="sustainSelectAll0" class="content-detail">All</label>
+    </div>
     <?php
-    foreach ($areaFilter as $area) {
+    foreach ($allAreas as $area) {
         ?>
         <div class="div area filter" id="area<?php echo $area["id"]; ?>">
-            <input class="input area filter" id="input<?php echo $area["id"]; ?>"
-                   value="<?php echo $area["id"]; ?>" type="checkbox" name="areaChkList"
-                <?php
-                if (contain($areaFilterSelected, $area["id"])) {
-                    echo " checked='checked'";
-                }
-                ?>
-            >
+            <div class="div area filter chkbox" id="areaChkbox<?php echo $area["id"]; ?>">
+                <input class="input area filter" id="input<?php echo $area["id"]; ?>"
+                       value="<?php echo $area["id"]; ?>" type="checkbox" name="areaChkList"
+                       onclick="checkSelectAll('sustainSelectAll', 'areaChkList')"
+                    <?php
+                    if (contain($areaFilterSelected, $area["id"])) {
+                        echo " checked='checked'";
+                    }
+                    ?>
+                >
+                <label class="label filter area"><?php echo $area["name"]; ?>&nbsp&nbsp&nbsp</label>
+            </div>
+            <div class='colorBlock' style='background-color:<?php echo $area["color"]; ?>;
+                float: left'>
+                &nbsp&nbsp&nbsp
+            </div>
+            <br>
         </div>
         <?php
     }
@@ -92,10 +141,12 @@ function printingFilters($areaFilterSelected, $areaFilter){
 }
 
 /**
- * @param $projectAreaID
- * @return array
+ * Query projects based on sustainability areas.
+ * @param $projectAreaID sustainability area ID
+ * @param $con database connection
+ * @return array a list of projects
  */
-function queryProject($projectAreaID)
+function queryProject($projectAreaID, $con)
 {
     $query = "SELECT * FROM project ";
 
@@ -114,7 +165,7 @@ function queryProject($projectAreaID)
         $result = [];
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "name" => $row["name"],
-                "area" => $row["area"], "uID" => explode(",", $row["uID"]),
+                "area" => $row["area"], "uid" => explode(",", $row["uID"]),
                 "link" => $row["link"]]);
         }
     }
@@ -125,31 +176,44 @@ function queryProject($projectAreaID)
 /**
  * Given a list of projects, return all related people.
  * @param $projectList $projectList project list from DB retrieve, @see queryProject
+ * @param $con database connection
+ * @return array|null a list of people if $projectList is not null, otherwise null
  */
-function queryPropleBasedOnProjects($projectList)
+function queryPropleBasedOnProjects($projectList, $con)
 {
     $pid = getPIDFromProjects($projectList);
+    $result = null;
 
-    if (is_null($pid)) {
+    if (!is_null($pid)) {
+        $result = [];
+
         $query = "SELECT * FROM person WHERE ";
 
+        $hasOr = false;
+
         foreach ($pid as $uid) {
-            $query .= " id = " . $uid . " ";
+            if (!$hasOr) {
+                $query .= " id = " . $uid . " ";
+                $hasOr = true;
+            } else {
+                $query .= " or id = " . $uid . " ";
+            }
         }
 
         $query .= ";";
 
         $queryResult = $con->query($query);
 
-        $result = [];
+
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
                 "name" => $row["name"], "area" => $row["area"],
                 "role" => $row["role"], "phone" => $row["phone"],
-                "email" => $row["email"], "pLink" => $row["pLink"],
-                "coID" => $row["coID"]]);
+                "email" => $row["email"], "pLink" => $row["pLink"]]);
         }
     }
+
+    return $result;
 }
 
 /**
@@ -165,6 +229,7 @@ function getPIDFromProjects($projectList)
         $pid = [];
         foreach ($projectList as $project) {
             $uids = $project["uid"];
+
             foreach ($uids as $uid) {
                 if (!contain($pid, $uid)) {
                     array_push($pid, $uid);

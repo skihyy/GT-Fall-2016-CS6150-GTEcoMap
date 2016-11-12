@@ -606,8 +606,7 @@ function queryPerson($query, $con)
         array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
             "name" => $row["name"], "area" => $row["area"],
             "role" => $row["role"], "phone" => $row["phone"],
-            "email" => $row["email"], "pLink" => $row["pLink"],
-            "coID" => $row["coID"]]);
+            "email" => $row["email"], "pLink" => $row["pLink"]]);
     }
 
     return queryAllProject($result, $con);
