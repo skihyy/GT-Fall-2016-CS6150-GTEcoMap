@@ -35,11 +35,13 @@ $areaFilterSelected = [];
 
 // if one filters something
 if (!is_null($_REQUEST["todo"])) {
-    $areaFilterSelected = $_REQUEST["area"];
+    $areaFilterSelected = $_REQUEST["areaChkList"];
 }
 
 $projectList = queryProject($areaFilterSelected, $con);
 $peopleList = queryPropleBasedOnProjects($projectList, $con);
+
+print_r($peopleList);
 
 printingPage($areaFilterSelected, $allAreas);
 
@@ -100,42 +102,45 @@ function printFilters($areaFilterSelected, $allAreas){
     <div class="filters div title">
         Sustainability Area
     </div>
-    <div class="filters div area" id="sustainSelectAlldiv">
-        <input class="input filter selectAll content-detail" id="sustainSelectAll" value="" type="checkbox"
-               onclick="selectAll(this, 'areaChkList')"
-            <?php
-            if (count($areaFilterSelected) == count($allAreas)) {
-                echo " checked='checked'";
-            }
-            ?>
-        >
-        <label for="sustainSelectAll0" class="content-detail">All</label>
-    </div>
-    <?php
-    foreach ($allAreas as $area) {
-        ?>
-        <div class="div area filter" id="area<?php echo $area["id"]; ?>">
-            <div class="div area filter chkbox" id="areaChkbox<?php echo $area["id"]; ?>">
-                <input class="input area filter" id="input<?php echo $area["id"]; ?>"
-                       value="<?php echo $area["id"]; ?>" type="checkbox" name="areaChkList"
-                       onclick="checkSelectAll('sustainSelectAll', 'areaChkList')"
-                    <?php
-                    if (contain($areaFilterSelected, $area["id"])) {
-                        echo " checked='checked'";
-                    }
-                    ?>
-                >
-                <label class="label filter area"><?php echo $area["name"]; ?>&nbsp&nbsp&nbsp</label>
-            </div>
-            <div class='colorBlock' style='background-color:<?php echo $area["color"]; ?>;
-                float: left'>
-                &nbsp&nbsp&nbsp
-            </div>
-            <br>
+    <form id="form">
+        <input hidden="hidden" value="filter" name="todo" />
+        <div class="filters div area" id="sustainSelectAlldiv">
+            <input class="input filter selectAll content-detail" id="sustainSelectAll" value="" type="checkbox"
+                   onclick="selectAll(this, 'areaChkList[]', 'form')"
+                <?php
+                if (count($areaFilterSelected) == count($allAreas)) {
+                    echo " checked='checked'";
+                }
+                ?>
+            >
+            <label for="sustainSelectAll0" class="content-detail">All</label>
         </div>
         <?php
-    }
-    ?>
+        foreach ($allAreas as $area) {
+            ?>
+            <div class="div area filter" id="area<?php echo $area["id"]; ?>">
+                <div class="div area filter chkbox" id="areaChkbox<?php echo $area["id"]; ?>">
+                    <input class="input area filter" id="input<?php echo $area["id"]; ?>"
+                           value="<?php echo $area["id"]; ?>" type="checkbox" name="areaChkList[]"
+                           onclick="checkSelectAll('sustainSelectAll', 'areaChkList', 'form')"
+                        <?php
+                        if (contain($areaFilterSelected, $area["id"])) {
+                            echo " checked='checked'";
+                        }
+                        ?>
+                    >
+                    <label class="label filter area"><?php echo $area["name"]; ?>&nbsp&nbsp&nbsp</label>
+                </div>
+                <div class='colorBlock' style='background-color:<?php echo $area["color"]; ?>;
+                    float: left'>
+                    &nbsp&nbsp&nbsp
+                </div>
+                <br>
+            </div>
+            <?php
+        }
+        ?>
+    </form>
 </div>
 <?php
 }
@@ -152,8 +157,18 @@ function queryProject($projectAreaID, $con)
 
     if (!is_null($projectAreaID)) {
         $query .= " WHERE ";
+        $hasOr = false;
+
         foreach ($projectAreaID as $aid) {
-            $query .= " area = " . $aid . " ";
+            if(!$hasOr)
+            {
+                $query .= " area = " . $aid . " ";
+                $hasOr = true;
+            }
+            else
+            {
+                $query .= " OR area = " . $aid . " ";
+            }
         }
     }
 
@@ -196,7 +211,7 @@ function queryPropleBasedOnProjects($projectList, $con)
                 $query .= " id = " . $uid . " ";
                 $hasOr = true;
             } else {
-                $query .= " or id = " . $uid . " ";
+                $query .= " OR id = " . $uid . " ";
             }
         }
 

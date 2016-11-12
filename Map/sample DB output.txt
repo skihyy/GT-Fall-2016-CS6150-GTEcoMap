@@ -1,0 +1,32 @@
+Areas:
+[
+	[[id] => 3 [name] => Energy [color] => #ff6666]
+	[[id] => 4 [name] => Land Use [color] => #00e600]
+	[[id] => 5 [name] => Business [color] => #8533ff]
+	[[id] => 6 [name] => Waste [color] => #4dffd2]
+	[[id] => 7 [name] => Food [color] => #ffc266]
+	[[id] => 8 [name] => Other [color] => #66ffb3]
+]
+
+Projects:
+[
+	[[id] => 5 [name] => GT Sustainability Eco Map [area] => 8 [uid] => [16] [link] => 127.0.0.1/table.php]
+	[[id] => 6 [name] => Examing Campus Sustainability and Food Surcing [area] => 7 
+		[uid] => [21] [link] => www.iac.gatech.edu/students/graduate/graduate-student-profiles/rebecca-watts-hull]
+	[[id] => 7 [name] => Project ENGAGES [area] => 6 
+		[uid] => [20] [link] => projectengages.gatech.edu]
+	[[id] => 8 [name] => Engineering Building Power Recycling [area] => 3 
+		[uid] => [16, 19] [link] => ]
+]
+	
+People:
+[
+	[[id] => 16 [deptID] => 111 [name] => Anne Rogers [area] => 8 [role] => 3 
+		[phone] => [email] => anne.rogers@gatech.edu [pLink] => ]
+	[[id] => 19 [deptID] => 108 [name] => Brian Schmatz [area] => 3 [role] => 1 
+		[phone] => (404)336-8232 [email] => bs004@gatech.edu [pLink] => linkedin.com/in/brianschmatz]
+	[[id] => 20 [deptID] => 109 [name] => Nicole Kennard [area] => 6 [role] => 1 
+		[phone] => (772)920-9273 [email] => n.kennard@gatech.edu [pLink] => linkedin.com/in/nicolekennard]
+	[[id] => 21 [deptID] => 110 [name] => Rebecca Watts Hull [area] => 7 [role] => 1 
+		[phone] => (743)983-9302 [email] => hwrebacca@gatech.edu [pLink] => ]
+]
