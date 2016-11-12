@@ -41,7 +41,7 @@ if (!is_null($_REQUEST["todo"])) {
 $projectList = queryProject($areaFilterSelected, $con);
 $peopleList = queryPropleBasedOnProjects($projectList, $con);
 
-print_r($peopleList);
+//print_r($peopleList);
 
 printingPage($areaFilterSelected, $allAreas);
 
