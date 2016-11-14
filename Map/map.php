@@ -41,7 +41,16 @@ if (!is_null($_REQUEST["todo"])) {
 $projectList = queryProject($areaFilterSelected, $con);
 $peopleList = queryPropleBasedOnProjects($projectList, $con);
 
-//print_r($peopleList);
+$jsonRelationsForVisualization = formatNodes($projectList, $peopleList, $allAreas);
+
+print_r($projectList);
+print_r("<br/><br/>");
+print_r($peopleList);
+print_r("<br/><br/>");
+print_r($allAreas);
+print_r("<br/><br/>");
+print_r($jsonRelationsForVisualization);
+print_r("<br/><br/>");
 
 printingPage($areaFilterSelected, $allAreas);
 
@@ -103,7 +112,7 @@ function printFilters($areaFilterSelected, $allAreas){
         Sustainability Area
     </div>
     <form id="form">
-        <input hidden="hidden" value="filter" name="todo" />
+        <input hidden="hidden" value="filter" name="todo"/>
         <div class="filters div area" id="sustainSelectAlldiv">
             <input class="input filter selectAll content-detail" id="sustainSelectAll" value="" type="checkbox"
                    onclick="selectAll(this, 'areaChkList[]', 'form')"
@@ -160,13 +169,10 @@ function queryProject($projectAreaID, $con)
         $hasOr = false;
 
         foreach ($projectAreaID as $aid) {
-            if(!$hasOr)
-            {
+            if (!$hasOr) {
                 $query .= " area = " . $aid . " ";
                 $hasOr = true;
-            }
-            else
-            {
+            } else {
                 $query .= " OR area = " . $aid . " ";
             }
         }
@@ -288,4 +294,77 @@ function queryAllSustainAreas($con)
     }
 
     return $result;
+}
+
+/**
+ * Return color of an area matching the id.
+ * @param $areas a list of areas
+ * @param $id the id of area
+ * @return mixed color if find a match or default color otherwise
+ */
+function getProjectColor($areas, $id)
+{ // for a project, find the color correspond to its sus. area
+    foreach ($areas as $area) {
+        if ($area["id"] == $id) {
+            return $area["color"];
+        }
+    }
+
+    return "#ffcc00";
+}
+
+/**
+ * @param $ppRelation
+ * @param $personId
+ * @return array
+ */
+function getProjectIdbyPersonId($ppRelation, $personId)
+{
+    $projectIds = array();
+    foreach ($ppRelation as $pp) {
+        if ($pp["personId"] == $personId) {
+            $projectIds[] = $pp["projectId"];
+        }
+    }
+
+    return $projectIds;  //each person could have worked on many projects
+}
+
+/**
+ * Given some projects and people, return a D3 required json format of relationships for data visualization.
+ * @param $projects a list of projects
+ * @param $people a list of people
+ * @param $areas all sustainability areas
+ * @return string json based relationships
+ */
+function formatNodes($projects, $people, $areas)
+{
+    $node = array();
+    $link = array();
+    $numNodes = 1;
+    $personProjectRelation = array();
+
+    foreach ($projects as $project) {
+        $projectUid = explode(",", $project["uid"]);
+        foreach ($projectUid as $uid) {
+            array_push($personProjectRelation, ["personId" => $uid, "projectId" => $numNodes]);
+        }
+
+        array_push($node, ["id" => $numNodes, "type" => "project", "name" => $project["name"], "link" => $project["link"], "color" => getProjectColor($areas, $project["area"])]);
+        $numNodes++;
+    }
+
+    foreach ($people as $person) {
+        $projectIds = getProjectIdbyPersonId($personProjectRelation, $person["id"]); //using original id of the person
+        foreach ($projectIds as $projectId) {
+            array_push($link, ["source" => $projectId, "target" => $numNodes, "value" => 1]);
+        }
+
+        array_push($node, ["id" => $numNodes, "type" => "person", "name" => $person["name"], "link" => $person["pLink"], "color" => ""]);
+
+        $numNodes++;
+    }
+
+    // return array("nodes" => $node, "links" => $link);
+    return json_encode(array("nodes" => $node, "links" => $link));
 }
