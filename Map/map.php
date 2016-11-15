@@ -43,6 +43,7 @@ $peopleList = queryPropleBasedOnProjects($projectList, $con);
 
 $jsonRelationsForVisualization = formatNodes($projectList, $peopleList, $allAreas);
 
+/*
 print_r($projectList);
 print_r("<br/><br/>");
 print_r($peopleList);
@@ -51,6 +52,7 @@ print_r($allAreas);
 print_r("<br/><br/>");
 print_r($jsonRelationsForVisualization);
 print_r("<br/><br/>");
+*/
 
 printingPage($areaFilterSelected, $allAreas);
 
@@ -320,6 +322,9 @@ function getProjectColor($areas, $id)
  */
 function getProjectIdbyPersonId($ppRelation, $personId)
 {
+    print_r($ppRelation);
+
+
     $projectIds = array();
     foreach ($ppRelation as $pp) {
         if ($pp["personId"] == $personId) {
@@ -356,6 +361,7 @@ function formatNodes($projects, $people, $areas)
 
     foreach ($people as $person) {
         $projectIds = getProjectIdbyPersonId($personProjectRelation, $person["id"]); //using original id of the person
+
         foreach ($projectIds as $projectId) {
             array_push($link, ["source" => $projectId, "target" => $numNodes, "value" => 1]);
         }
