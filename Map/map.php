@@ -6,8 +6,8 @@
     <title>Sustainability Map</title>
     <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
 </head>
-<!-- after the page is loaded, if some buttons were blue, they should trun to blue again. -->
-<body onload="">
+<!-- after the page is loaded, if some buttons were blue, they should turn to blue again. -->
+<body onload="test()">
 <?php
 /**
  * Created by PhpStorm.
@@ -36,23 +36,17 @@ $areaFilterSelected = [];
 // if one filters something
 if (!is_null($_REQUEST["todo"])) {
     $areaFilterSelected = $_REQUEST["areaChkList"];
+
+    if(is_null($areaFilterSelected))
+    {
+        $areaFilterSelected = [];
+    }
 }
 
 $projectList = queryProject($areaFilterSelected, $con);
 $peopleList = queryPropleBasedOnProjects($projectList, $con);
 
 $jsonRelationsForVisualization = formatNodes($projectList, $peopleList, $allAreas);
-
-/*
-print_r($projectList);
-print_r("<br/><br/>");
-print_r($peopleList);
-print_r("<br/><br/>");
-print_r($allAreas);
-print_r("<br/><br/>");
-print_r($jsonRelationsForVisualization);
-print_r("<br/><br/>");
-*/
 
 printingPage($areaFilterSelected, $allAreas);
 
@@ -232,7 +226,8 @@ function queryPropleBasedOnProjects($projectList, $con)
             array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
                 "name" => $row["name"], "area" => $row["area"],
                 "role" => $row["role"], "phone" => $row["phone"],
-                "email" => $row["email"], "pLink" => $row["pLink"]]);
+                "email" => $row["email"], "pLink" => $row["pLink"],
+                "imgLink" => $row["imglink"]]);
         }
     }
 
@@ -322,7 +317,7 @@ function getProjectColor($areas, $id)
  */
 function getProjectIdbyPersonId($ppRelation, $personId)
 {
-    print_r($ppRelation);
+    //print_r($ppRelation);
 
 
     $projectIds = array();
