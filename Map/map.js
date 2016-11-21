@@ -82,8 +82,7 @@ function draw(data) {
     v.domain([0, d3.max(links, function (d) {
         return d.value;
     })]);
-
-
+    
     var svg = d3.select("#d3AreaMain").append("svg")
         .attr("width", width)
         .attr("height", height);
