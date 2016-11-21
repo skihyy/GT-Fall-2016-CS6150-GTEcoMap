@@ -2,12 +2,13 @@
 <meta charset="utf-8">
 <head>
     <script src="map.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="map.css">
     <title>Sustainability Map</title>
     <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
 </head>
 <!-- after the page is loaded, if some buttons were blue, they should turn to blue again. -->
-<body onload="test()">
+<body>
 <?php
 /**
  * Created by PhpStorm.
@@ -26,7 +27,7 @@ if (!$con) {
     die("Database connection initialization failed.");
 }
 
-if (!mysqli_real_connect($con, "127.0.0.1", "root", "root", "gt_eco_map", 3306)) {
+if (!mysqli_real_connect($con, "localhost", "root", "root", "gt_eco_map", 3306)) {
     die("Connect Error: " . mysqli_connect_error());
 }
 
@@ -97,10 +98,11 @@ function printMapAreas($jsonRelationsForVisualization)
         <div class="map div title">
             Sustainability Projects
         </div>
-        <div class="map div d3Area">
+        <div class="map div d3Area" id="d3AreaMain">
             <script>
                 var data = <?php echo $jsonRelationsForVisualization; ?>;
                 console.log(data);
+                draw(data);
             </script>
         </div>
     </div>
