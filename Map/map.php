@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <head>
     <script src="map.js"></script>
-    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="d3.v3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="map.css">
     <title>Sustainability Map</title>
     <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
@@ -32,7 +32,7 @@ if (!mysqli_real_connect($con, "127.0.0.1", "root", "root", "gt_eco_map", 3306))
 }
 
 $allAreas = queryAllSustainAreas($con);
-$areaFilterSelected = [];
+$areaFilterSelected = "all";
 
 // if one filters something
 if (!is_null($_REQUEST["todo"])) {
@@ -40,7 +40,7 @@ if (!is_null($_REQUEST["todo"])) {
 
     if(is_null($areaFilterSelected))
     {
-        $areaFilterSelected = [];
+        $areaFilterSelected = "all";
     }
 }
 
@@ -187,7 +187,7 @@ function queryProject($projectAreaID, $con)
 {
     $query = "SELECT * FROM project ";
 
-    if (!is_null($projectAreaID)) {
+    if (!is_null($projectAreaID) && "all" != $projectAreaID) {
         $query .= " WHERE ";
         $hasOr = false;
 
