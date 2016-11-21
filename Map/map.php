@@ -7,7 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
 </head>
 <!-- after the page is loaded, if some buttons were blue, they should turn to blue again. -->
-<body onload="test()">
+<body onload="">
 <?php
 /**
  * Created by PhpStorm.
@@ -54,6 +54,10 @@ printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization);
 /////////////////            FUNCTIONS                //////////////
 ////////////////////////////////////////////////////////////////////
 
+
+////////////////////////////////////////////////////////////////////
+/////////////////      PRINTING WAB PAGES             //////////////
+////////////////////////////////////////////////////////////////////
 /**
  * Printing the web pages. Of course, the map will be printed by JS.
  * @param $areaFilterSelected selected areas by users
@@ -63,7 +67,7 @@ printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization);
 function printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization)
 {
     printTitle();
-    printFilters($areaFilterSelected, $allAreas);
+    printFiltersAndReset($areaFilterSelected, $allAreas);
     printMapAreas($jsonRelationsForVisualization);
 }
 
@@ -112,7 +116,7 @@ function printMapAreas($jsonRelationsForVisualization)
  * @param $areaFilterSelected user selected areas
  * @param $allAreas all areas
  */
-function printFilters($areaFilterSelected, $allAreas){
+function printFiltersAndReset($areaFilterSelected, $allAreas){
 ?>
 <div class="filters div" id="filterDiv">
     <div class="filters div title">
@@ -157,9 +161,19 @@ function printFilters($areaFilterSelected, $allAreas){
         }
         ?>
     </form>
+    <div class="div functionArea button reset" id="resetButton">
+        <a class="input button href" id="resetButtonSubmit"
+           href="map.php" style="vertical-align: middle; line-height: 30px; text-decoration:none">
+            Reset All
+        </a>
+    </div>
 </div>
 <?php
 }
+
+////////////////////////////////////////////////////////////////////
+/////////////////        DATABASE HANDLER             //////////////
+////////////////////////////////////////////////////////////////////
 
 /**
  * Query projects based on sustainability areas.
