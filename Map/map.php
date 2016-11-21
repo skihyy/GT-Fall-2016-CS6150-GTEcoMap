@@ -17,7 +17,7 @@
  */
 
 // not showing notices or errors
-error_reporting(E_ALL ^ E_NOTICE);
+ error_reporting(E_ALL ^ E_NOTICE);
 
 // basic MySQL connection preparation
 $con = mysqli_init();
@@ -48,7 +48,7 @@ $peopleList = queryPropleBasedOnProjects($projectList, $con);
 
 $jsonRelationsForVisualization = formatNodes($projectList, $peopleList, $allAreas);
 
-printingPage($areaFilterSelected, $allAreas);
+printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization);
 
 ////////////////////////////////////////////////////////////////////
 /////////////////            FUNCTIONS                //////////////
@@ -56,12 +56,15 @@ printingPage($areaFilterSelected, $allAreas);
 
 /**
  * Printing the web pages. Of course, the map will be printed by JS.
+ * @param $areaFilterSelected selected areas by users
+ * @param $allAreas all areas
+ * @param $jsonRelationsForVisualization a formatted json for visualization
  */
-function printingPage($areaFilterSelected, $allAreas)
+function printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization)
 {
     printTitle();
     printFilters($areaFilterSelected, $allAreas);
-    printMapAreas();
+    printMapAreas($jsonRelationsForVisualization);
 }
 
 /**
@@ -85,21 +88,29 @@ function printTitle()
 
 /**
  * Printing the areas for the map.
+ * @param $jsonRelationsForVisualization json for visualization
  */
-function printMapAreas()
+function printMapAreas($jsonRelationsForVisualization)
 {
     ?>
     <div class="div map" id="mapDiv">
         <div class="map div title">
             Sustainability Projects
         </div>
-        <div class="map div d3Area"></div>
+        <div class="map div d3Area">
+            <script>
+                var data = <?php echo $jsonRelationsForVisualization; ?>;
+                console.log(data);
+            </script>
+        </div>
     </div>
     <?php
 }
 
 /**
  * Printing the filters.
+ * @param $areaFilterSelected user selected areas
+ * @param $allAreas all areas
  */
 function printFilters($areaFilterSelected, $allAreas){
 ?>
@@ -177,9 +188,9 @@ function queryProject($projectAreaID, $con)
     $query .= ";";
 
     $queryResult = $con->query($query);
+    $result = [];
 
     if (false != $queryResult) {
-        $result = [];
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "name" => $row["name"],
                 "area" => $row["area"], "uid" => explode(",", $row["uID"]),
@@ -199,11 +210,9 @@ function queryProject($projectAreaID, $con)
 function queryPropleBasedOnProjects($projectList, $con)
 {
     $pid = getPIDFromProjects($projectList);
-    $result = null;
+    $result = [];
 
-    if (!is_null($pid)) {
-        $result = [];
-
+    if (!is_null($pid) && 0 < count($pid)) {
         $query = "SELECT * FROM person WHERE ";
 
         $hasOr = false;
@@ -220,7 +229,6 @@ function queryPropleBasedOnProjects($projectList, $con)
         $query .= ";";
 
         $queryResult = $con->query($query);
-
 
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
@@ -317,9 +325,6 @@ function getProjectColor($areas, $id)
  */
 function getProjectIdbyPersonId($ppRelation, $personId)
 {
-    //print_r($ppRelation);
-
-
     $projectIds = array();
     foreach ($ppRelation as $pp) {
         if ($pp["personId"] == $personId) {
@@ -341,12 +346,11 @@ function formatNodes($projects, $people, $areas)
 {
     $node = array();
     $link = array();
-    $numNodes = 1;
+    $numNodes = 0;
     $personProjectRelation = array();
 
     foreach ($projects as $project) {
-        $projectUid = explode(",", $project["uid"]);
-        foreach ($projectUid as $uid) {
+        foreach ($project["uid"] as $uid) {
             array_push($personProjectRelation, ["personId" => $uid, "projectId" => $numNodes]);
         }
 
