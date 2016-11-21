@@ -2,12 +2,13 @@
 <meta charset="utf-8">
 <head>
     <script src="map.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="map.css">
     <title>Sustainability Map</title>
     <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
 </head>
 <!-- after the page is loaded, if some buttons were blue, they should turn to blue again. -->
-<body onload="">
+<body>
 <?php
 /**
  * Created by PhpStorm.
@@ -53,7 +54,6 @@ printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization);
 ////////////////////////////////////////////////////////////////////
 /////////////////            FUNCTIONS                //////////////
 ////////////////////////////////////////////////////////////////////
-
 
 ////////////////////////////////////////////////////////////////////
 /////////////////      PRINTING WAB PAGES             //////////////
@@ -101,10 +101,11 @@ function printMapAreas($jsonRelationsForVisualization)
         <div class="map div title">
             Sustainability Projects
         </div>
-        <div class="map div d3Area">
+                <div class="map div d3Area" id="d3AreaMain">
             <script>
                 var data = <?php echo $jsonRelationsForVisualization; ?>;
                 console.log(data);
+                draw(data);
             </script>
         </div>
     </div>
@@ -174,6 +175,7 @@ function printFiltersAndReset($areaFilterSelected, $allAreas){
 ////////////////////////////////////////////////////////////////////
 /////////////////        DATABASE HANDLER             //////////////
 ////////////////////////////////////////////////////////////////////
+
 
 /**
  * Query projects based on sustainability areas.
