@@ -161,13 +161,19 @@ function printFiltersAndReset($areaFilterSelected, $allAreas){
             <?php
         }
         ?>
+        <div class="div functionArea button reset" id="resetButton">
+            <input type="submit" class="div functionArea button reset" id="resetButton"
+                   value="Reset">
+        </div>
     </form>
+    <!--
     <div class="div functionArea button reset" id="resetButton">
         <a class="input button href" id="resetButtonSubmit"
            href="map.php" style="vertical-align: middle; line-height: 30px; text-decoration:none">
             Reset All
         </a>
     </div>
+    -->
 </div>
 <?php
 }
