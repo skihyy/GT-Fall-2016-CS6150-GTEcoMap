@@ -7,8 +7,8 @@ This one has only one-level filter and works well.
 <head>
     <script src="table.js"></script>
     <link rel="stylesheet" type="text/css" href="table.css">
-	<title>Sustainability Directory</title>
-	<link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico" />
+    <title>Sustainability Directory</title>
+    <link rel="shortcut icon" type="image/x-icon" href="titleIcon.ico"/>
 </head>
 <!-- after the page is loaded, if some buttons were blue, they should trun to blue again. -->
 <body onload="changeColorToBlue()">
@@ -47,18 +47,24 @@ $sustainList = queryAllSustainAreas($con);
 //$anyOperationAfterLastTime = false; // for changing color
 
 if (!is_null($_REQUEST["todo"])) {
-    $search = $_REQUEST["search"];
-    $areaFilter = explode(",", $_REQUEST["area"]);
-    $deptFilter = explode(",", $_REQUEST["dept"]);
-    $roleFilter = explode(",", $_REQUEST["role"]);
+    switch ($_REQUEST["todo"]) {
+        case "frommap":
+            $whereQuery .= " WHERE id = " . $_REQUEST["id"];
+            break;
+        default:
+            $search = $_REQUEST["search"];
+            $areaFilter = explode(",", $_REQUEST["area"]);
+            $deptFilter = explode(",", $_REQUEST["dept"]);
+            $roleFilter = explode(",", $_REQUEST["role"]);
 
-    $currentPage = 1; // need to change
-    $searchCondition = getSearchCondition($search, $con);
-    $whereCondition = getWhereCondition($areaFilter,
-        $deptFilter, $roleFilter, $sustainList, $deptList, $con);
-    $whereQuery .= $whereCondition;
+            $currentPage = 1; // need to change
+            $searchCondition = getSearchCondition($search, $con);
+            $whereCondition = getWhereCondition($areaFilter,
+                $deptFilter, $roleFilter, $sustainList, $deptList, $con);
+            $whereQuery .= $whereCondition;
 
-    //$anyOperationAfterLastTime = true;
+        //$anyOperationAfterLastTime = true;
+    }
 } // if it's null, then it can be the first time go to this page
 else {
     // filters showing / selecting all
@@ -432,7 +438,7 @@ function printRoleFilter($roleFilter)
         Role
         <span class="span functionArea role filter name"></span>
         <img id="roleArrow" class="img functionArea role filter name dropImg"
-             src="downArrow.png" width="22" height="22" >
+             src="downArrow.png" width="22" height="22">
     </div>
     <!-- printing select all -->
     <div class="dropdown-content" id="roleDetails">
@@ -449,7 +455,8 @@ function printRoleFilter($roleFilter)
         </div>
 
         <div class="div functionArea role filter content-detail" id="roleSelectS">
-            <input class="input filter select content-detail" id="roleSelect1" value="1" type="checkbox" name="roleChkList"
+            <input class="input filter select content-detail" id="roleSelect1" value="1" type="checkbox"
+                   name="roleChkList"
                    onclick="changeInput(false)"
                 <?php
                 if ("all" === $roleFilter || contain($roleFilter, "1")) {
@@ -460,7 +467,8 @@ function printRoleFilter($roleFilter)
             <label for="roleSelect1" class="content-detail">Student</label>
         </div>
         <div class="div functionArea role filter content-detail" id="roleSelectF">
-            <input class="input filter select content-detail" id="roleSelect2" value="2" type="checkbox" name="roleChkList"
+            <input class="input filter select content-detail" id="roleSelect2" value="2" type="checkbox"
+                   name="roleChkList"
                    onclick="changeInput(false)"
                 <?php
                 if ("all" === $roleFilter || contain($roleFilter, "2")) {
@@ -471,7 +479,8 @@ function printRoleFilter($roleFilter)
             <label for="roleSelect2" class="content-detail">Faculty</label>
         </div>
         <div class="div functionArea role filter content-detail" id="roleSelectSt">
-            <input class="input filter select content-detail" id="roleSelect3" value="3" type="checkbox" name="roleChkList"
+            <input class="input filter select content-detail" id="roleSelect3" value="3" type="checkbox"
+                   name="roleChkList"
                    onclick="changeInput(false)"
                 <?php
                 if ("all" === $roleFilter || contain($roleFilter, "3")) {
@@ -766,7 +775,7 @@ function getSustainArea($projects, $areaID, $sustainList, $areaFilter)
         foreach ($sustainList as $area) {
             if ($area["id"] == $areaID) {
                 return "<div class='colorBlock' style='float: left; background-color: " .
-                $area["color"] . "'>&nbsp&nbsp&nbsp</div>&nbsp&nbsp" . $area["name"];
+                    $area["color"] . "'>&nbsp&nbsp&nbsp</div>&nbsp&nbsp" . $area["name"];
             }
         }
         return "Unknown";

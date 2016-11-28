@@ -252,11 +252,24 @@ function queryPropleBasedOnProjects($projectList, $con)
 
         $queryResult = $con->query($query);
 
+        /*
+         * // the original way
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
                 "name" => $row["name"], "area" => $row["area"],
                 "role" => $row["role"], "phone" => $row["phone"],
                 "email" => $row["email"], "pLink" => $row["pLink"],
+                "imgLink" => $row["imglink"]]);
+        }
+        */
+
+        // the new way
+        // set pLink as the link to directory
+        while ($row = $queryResult->fetch_array()) {
+            array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
+                "name" => $row["name"], "area" => $row["area"],
+                "role" => $row["role"], "phone" => $row["phone"],
+                "email" => $row["email"], "pLink" => "127.0.0.1/GTEcoMap/Directory/table.php?todo=frommap&id=" . $row["id"],
                 "imgLink" => $row["imglink"]]);
         }
     }
@@ -387,7 +400,7 @@ function formatNodes($projects, $people, $areas)
             array_push($link, ["source" => $projectId, "target" => $numNodes, "value" => 1]);
         }
 
-        array_push($node, ["id" => $numNodes, "type" => "person", "name" => $person["name"], "link" => $person["pLink"], "color" => ""]);
+        array_push($node, ["id" => $numNodes, "type" => "person", "name" => $person["name"], "link" => $person["pLink"], "color" => "", "imgLink" => $person["imgLink"]]);
 
         $numNodes++;
     }
