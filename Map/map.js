@@ -141,7 +141,7 @@
         }
         // project node size is based on how many people work on it 
         else {
-            return 60 * Math.sqrt(d.weight);
+            return 60 * Math.pow(d.weight, 1/4);
         }
     });
 
