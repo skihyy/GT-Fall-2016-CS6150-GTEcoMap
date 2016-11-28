@@ -129,6 +129,7 @@ function draw(data) {
     // add the circle
     node.append("circle")
     // fill with the node color
+<<<<<<< .merge_file_dzO6sV
         .attr("fill", function (d) {
             if (d.color == "") return "#CCC";
             else return d.color;
@@ -144,6 +145,23 @@ function draw(data) {
                 return 60 * Math.sqrt(d.weight);
             }
         });
+=======
+    .attr("fill", function (d) { 
+        if(d.color=="") return "#CCC";
+        else return d.color;
+    })
+    // set the size of the circle
+    .attr("r", function (d) {
+        // person node is one-size for all
+        if (d.type == "person") {
+            return 20;
+        }
+        // project node size is based on how many people work on it 
+        else {
+            return 60 * Math.pow(d.weight, 1/4);
+        }
+    });
+>>>>>>> .merge_file_bPJnOs
 
     // hide all the person node in default
     node.style("visibility", function (d) {
