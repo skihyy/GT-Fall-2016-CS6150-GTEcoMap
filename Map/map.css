@@ -21,7 +21,6 @@ path.link.onezerozero {
 }
 
 circle {
-    fill: #ccc;
     stroke: black;
     stroke-width: 1.5px;
 }
@@ -29,12 +28,11 @@ circle {
 text {
     fill: #000;
     font: 10px sans-serif;
-    pointer-events: none;
 }
 
 body {
     font-family: Verdana, sans-serif;
-    margin: 15px;
+    margin: 8px;
     border: 1;
     font-size: 14px;
     font-weight: normal;

@@ -181,6 +181,7 @@
     })
     .attr("isExpend", "false")
     .append("xhtml:body")
+    .style("margin","8pt")
     .html(function (d) {
         return d.name;
     })
