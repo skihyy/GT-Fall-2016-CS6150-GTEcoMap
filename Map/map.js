@@ -179,17 +179,19 @@
     .attr("height", function (d) {
         return 80;
     })
+    .attr("isExpend", "false")
     .append("xhtml:body")
     .html(function (d) {
         return d.name;
     })
+    .style("font-size", "85%")
     // add the project's hyperlink if it has any
     .append("foreignObject")
     .filter(function(d) { 
         return d.link != null; })
     .append("xhtml:body")
     .html(function (d) {
-        return "link";
+        return "more";
     })
     .on("click", function(d) { 
         window.open("http://"+d.link); 
@@ -197,6 +199,7 @@
     .style("color","blue")
     .style("text-decoration","underline")
     .style("cursor","pointer")
+    .style("font-size", "75%")
 
 
 
@@ -208,20 +211,20 @@
     .text(function(d){
         return d.name;
     })
+    .on("click", function(d) { 
+        window.open("http://"+d.link); 
+    })
+
 
     // add the person's hyperlink text if a person has a link
     node.filter(function(d) { return d.type == "person"; })
     .filter(function(d) { 
         return d.link != null; 
     })
-    .append("text")
-    .text("link")
+    .select("text")
     .on("click", function(d) { 
         window.open("http://"+d.link); 
     })
-    .attr("dy",45)
-    .attr("dx",35)
-    .style("stroke","blue")
     .style("text-decoration","underline")
     .style("cursor","pointer")
 
@@ -244,6 +247,7 @@
             else return "hidden";
         })
         //console.log(list);
+
         // gery-out all the other projects that not in the previous stored list
         node.transition()
         .style("opacity", function (e) {
