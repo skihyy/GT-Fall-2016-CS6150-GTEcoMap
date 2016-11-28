@@ -1,31 +1,97 @@
 path.link {
-  fill: none;
-  stroke: #666;
-  stroke-width: 1.5px;
+    fill: none;
+    stroke: #666;
+    stroke-width: 1.5px;
 }
 
 path.link.twofive {
-  opacity: 0.25;
+    opacity: 0.25;
 }
 
 path.link.fivezero {
-  opacity: 0.50;
+    opacity: 0.50;
 }
 
 path.link.sevenfive {
-  opacity: 0.75;
+    opacity: 0.75;
 }
 
 path.link.onezerozero {
-  opacity: 1.0;
+    opacity: 1.0;
 }
 
 circle {
-  stroke: black;
-  stroke-width: 1.5px;
+    fill: #ccc;
+    stroke: black;
+    stroke-width: 1.5px;
 }
 
 text {
-  fill: #000;
-  font: 10px sans-serif;
+    fill: #000;
+    font: 10px sans-serif;
+    pointer-events: none;
+}
+
+body {
+    font-family: Verdana, sans-serif;
+    margin: 15px;
+    border: 1;
+    font-size: 14px;
+    font-weight: normal;
+    color: #404040;
+}
+
+.div.title {
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.input.filter.selectAll.content-detail {
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+/* put the color box next to the filter option */
+.div.area.filter.chkbox, .colorBlock {
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+/*
+.div.area.filter.chkbox {
+  margin-left:-15px;
+}
+.colorBlock {
+  margin-left:100px;
+}
+*/
+
+/*
+.div.area.filter { display: table; }
+.div.area.filter.chkbox  { display: table-footer-group; }
+.colorBlock { display: table-header-group; }
+*/
+
+/* put filters and map display side by side  */
+
+.filters.div, .div.map {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+#filterDiv {
+    float: left;
+    width: 15%;
+}
+
+.map.div.title, .filters.div.title {
+    margin-top: 0px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.div.map {
+    float: right;
+    width: 85%;
 }
