@@ -67,7 +67,7 @@ function draw(data) {
     // Set the width
     var width = 960,
         //for every 15 node, add another 500 height
-        height = (~~(nodes.length / 15) + 1) * 500,
+        height = (~~(nodes.length / 15) + 1) * 600,
         color = d3.scale.category20c();
 
 
@@ -129,7 +129,6 @@ function draw(data) {
     // add the circle
     node.append("circle")
     // fill with the node color
-<<<<<<< .merge_file_dzO6sV
         .attr("fill", function (d) {
             if (d.color == "") return "#CCC";
             else return d.color;
@@ -142,26 +141,9 @@ function draw(data) {
             }
             // project node size is based on how many people work on it
             else {
-                return 60 * Math.sqrt(d.weight);
+                return 60 * Math.pow(d.weight, 1 / 4);
             }
         });
-=======
-    .attr("fill", function (d) { 
-        if(d.color=="") return "#CCC";
-        else return d.color;
-    })
-    // set the size of the circle
-    .attr("r", function (d) {
-        // person node is one-size for all
-        if (d.type == "person") {
-            return 20;
-        }
-        // project node size is based on how many people work on it 
-        else {
-            return 60 * Math.pow(d.weight, 1/4);
-        }
-    });
->>>>>>> .merge_file_bPJnOs
 
     // hide all the person node in default
     node.style("visibility", function (d) {
@@ -175,9 +157,8 @@ function draw(data) {
         return d.type == "person";
     })
         .append("svg:image")
-        //.attr("xlink:href","http://safariuganda.com/wp-content/uploads/2014/12/480px-Facebook-default-no-profile-pic.jpg")
+        //.attr("xlink:href", "http://safariuganda.com/wp-content/uploads/2014/12/480px-Facebook-default-no-profile-pic.jpg")
         .attr("xlink:href", function (d) {
-            console.log(d);
             return d.imgLink;
         })
         .attr("height", 20 * 2)

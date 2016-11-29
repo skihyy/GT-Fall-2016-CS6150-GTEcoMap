@@ -18,7 +18,7 @@
  */
 
 // not showing notices or errors
- error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE);
 
 // basic MySQL connection preparation
 $con = mysqli_init();
@@ -38,8 +38,7 @@ $areaFilterSelected = "all";
 if (!is_null($_REQUEST["todo"])) {
     $areaFilterSelected = $_REQUEST["areaChkList"];
 
-    if(is_null($areaFilterSelected))
-    {
+    if (is_null($areaFilterSelected)) {
         $areaFilterSelected = "all";
     }
 }
@@ -101,7 +100,7 @@ function printMapAreas($jsonRelationsForVisualization)
         <div class="map div title">
             Sustainability Projects
         </div>
-                <div class="map div d3Area" id="d3AreaMain">
+        <div class="map div d3Area" id="d3AreaMain">
             <script>
                 var data = <?php echo $jsonRelationsForVisualization; ?>;
                 console.log(data);
@@ -153,7 +152,7 @@ function printFiltersAndReset($areaFilterSelected, $allAreas){
                     <label class="label filter area"><?php echo $area["name"]; ?>&nbsp&nbsp&nbsp</label>
                 </div>
                 <div class='colorBlock' style='background-color:<?php echo $area["color"]; ?>;
-                    float: left'>
+                        float: left'>
                     &nbsp&nbsp&nbsp
                 </div>
                 <br>
@@ -252,8 +251,7 @@ function queryPropleBasedOnProjects($projectList, $con)
 
         $queryResult = $con->query($query);
 
-        /*
-         * // the original way
+        // the original way
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
                 "name" => $row["name"], "area" => $row["area"],
@@ -261,8 +259,9 @@ function queryPropleBasedOnProjects($projectList, $con)
                 "email" => $row["email"], "pLink" => $row["pLink"],
                 "imgLink" => $row["imglink"]]);
         }
-        */
 
+
+        /*
         // the new way
         // set pLink as the link to directory
         while ($row = $queryResult->fetch_array()) {
@@ -271,7 +270,7 @@ function queryPropleBasedOnProjects($projectList, $con)
                 "role" => $row["role"], "phone" => $row["phone"],
                 "email" => $row["email"], "pLink" => "127.0.0.1/GTEcoMap/Directory/table.php?todo=frommap&id=" . $row["id"],
                 "imgLink" => $row["imglink"]]);
-        }
+        }*/
     }
 
     return $result;
