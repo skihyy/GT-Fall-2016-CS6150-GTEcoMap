@@ -161,9 +161,15 @@ function printFiltersAndReset($areaFilterSelected, $allAreas){
         }
         ?>
         <div class="div functionArea button reset" id="resetButton">
+            <input id="resetButton" type="image" src="refresh.svg" class="div functionArea button reset"
+                   height="30" width="30">
+        </div>
+        <!--
+        <div class="div functionArea button reset" id="resetButton">
             <input type="submit" class="div functionArea button reset" id="resetButton"
                    value="Reset">
         </div>
+        -->
     </form>
     <!--
     <div class="div functionArea button reset" id="resetButton">
