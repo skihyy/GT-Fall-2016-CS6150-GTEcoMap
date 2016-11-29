@@ -251,6 +251,7 @@ function queryPropleBasedOnProjects($projectList, $con)
 
         $queryResult = $con->query($query);
 
+        /*
         // the original way
         while ($row = $queryResult->fetch_array()) {
             array_push($result, ["id" => $row["id"], "deptID" => $row["deptID"],
@@ -259,9 +260,8 @@ function queryPropleBasedOnProjects($projectList, $con)
                 "email" => $row["email"], "pLink" => $row["pLink"],
                 "imgLink" => $row["imglink"]]);
         }
+        */
 
-
-        /*
         // the new way
         // set pLink as the link to directory
         while ($row = $queryResult->fetch_array()) {
@@ -270,7 +270,7 @@ function queryPropleBasedOnProjects($projectList, $con)
                 "role" => $row["role"], "phone" => $row["phone"],
                 "email" => $row["email"], "pLink" => "127.0.0.1/GTEcoMap/Directory/table.php?todo=frommap&id=" . $row["id"],
                 "imgLink" => $row["imglink"]]);
-        }*/
+        }
     }
 
     return $result;
