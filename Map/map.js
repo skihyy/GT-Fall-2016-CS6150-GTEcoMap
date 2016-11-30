@@ -249,7 +249,7 @@ function draw(data) {
     //clicking the node logic
     node.on("click", function (d) {
         //console.log("Click!");
-        changeResetButtonColor("resetButtonButton");
+        //changeResetButtonColor("resetButtonButton");
 
         //console.log(d.id);
         // show all the links that connect to this node
