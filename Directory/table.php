@@ -807,6 +807,7 @@ function getContact($phone, $email, $link)
 
     if (null != $email) {
         $len1 = strlen($email);
+        $email = "<a href='mailto:" . $email . "'>" . $email . "</a>";
     }
 
     if (null != $link) {
