@@ -106,14 +106,20 @@ function printMapAreas($jsonRelationsForVisualization)
         <div class="map div title">
             Sustainability Projects
         </div>
+        <!--
         <div class="div functionArea button reset" id="resetButton">
             <input id="resetButton" type="image" src="refresh.svg" class="div functionArea button reset"
                    height="30" width="30">
         </div>
+        -->
+        <div class="div functionArea button reset" id="resetButton">
+            <input type="submit" class="div functionArea button reset" id="resetButtonButton"
+                   value="Reset">
+        </div>
         <div class="map div d3Area" id="d3AreaMain">
             <script>
                 var data = <?php echo $jsonRelationsForVisualization; ?>;
-                console.log(data);
+                //console.log(data);
                 draw(data);
             </script>
         </div>

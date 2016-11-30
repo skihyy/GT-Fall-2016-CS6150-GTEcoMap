@@ -32,8 +32,9 @@ text {
 
 body {
     font-family: Verdana, sans-serif;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin: 8px;
+    apadding-left: 20px;
+    apadding-right: 20px;
     border: 1;
     font-size: 14px;
     font-weight: normal;
@@ -86,8 +87,14 @@ body {
 
 /* place the refresh button to top-right */
 .div.functionArea.button.reset {
+    background-color: #A9A9A9;
+    color: white;
+    text-align: center;
+    font-size:14px;
+    height: 30px;
+    border: none;
     position: absolute;
-    margin-left: 395px; /* 60% */
+    margin-left: 475px;
     margin-top: -3px;
 }
 

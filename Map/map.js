@@ -43,6 +43,14 @@ function submitForm(id) {
     document.getElementById(id).submit();
 }
 
+function changeResetButtonColor(id){
+    //console.log("Click to change color!");
+    var button = document.getElementById(id);
+    //console.log(id);
+    //console.log(button)
+    button.style.background = "#0000CD";
+}
+
 /**
  * Visualization implementation.
  * @param data json data from DB
@@ -240,6 +248,9 @@ function draw(data) {
 
     //clicking the node logic
     node.on("click", function (d) {
+        //console.log("Click!");
+        changeResetButtonColor("resetButtonButton");
+
         //console.log(d.id);
         // show all the links that connect to this node
         // store all the node that connect to this node to a list for later check
@@ -267,8 +278,8 @@ function draw(data) {
             // show the person that stored in the previous list
             .style("visibility", function (e) {
                 if (e.type == "person") {
-                    console.log(e.id);
-                    console.log(list.indexOf(e.id));
+                    //console.log(e.id);
+                    //console.log(list.indexOf(e.id));
                     return (list.indexOf(e.id) > -1) ? "visible" : "hidden";
                 }
 
