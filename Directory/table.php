@@ -50,6 +50,9 @@ if (!is_null($_REQUEST["todo"])) {
     switch ($_REQUEST["todo"]) {
         case "frommap":
             $whereQuery .= " WHERE id = " . $_REQUEST["id"];
+            $areaFilter = "all";
+            $deptFilter = "all";
+            $roleFilter = "all";
             break;
         default:
             $search = $_REQUEST["search"];
