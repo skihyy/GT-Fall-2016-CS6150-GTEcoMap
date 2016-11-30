@@ -65,9 +65,15 @@ printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization);
  */
 function printingPage($areaFilterSelected, $allAreas, $jsonRelationsForVisualization)
 {
-    printTitle();
-    printFiltersAndReset($areaFilterSelected, $allAreas);
-    printMapAreas($jsonRelationsForVisualization);
+    ?>
+    <form id="form">
+        <?php
+        printTitle();
+        printFiltersAndReset($areaFilterSelected, $allAreas);
+        printMapAreas($jsonRelationsForVisualization);
+        ?>
+    </form>
+    <?php
 }
 
 /**
@@ -100,6 +106,10 @@ function printMapAreas($jsonRelationsForVisualization)
         <div class="map div title">
             Sustainability Projects
         </div>
+        <div class="div functionArea button reset" id="resetButton">
+            <input id="resetButton" type="image" src="refresh.svg" class="div functionArea button reset"
+                   height="30" width="30">
+        </div>
         <div class="map div d3Area" id="d3AreaMain">
             <script>
                 var data = <?php echo $jsonRelationsForVisualization; ?>;
@@ -122,8 +132,8 @@ function printFiltersAndReset($areaFilterSelected, $allAreas){
     <div class="filters div title">
         Sustainability Area
     </div>
-    <form id="form">
-        <input hidden="hidden" value="filter" name="todo"/>
+    <input hidden="hidden" value="filter" name="todo"/>
+    <div class="div area filter" id="area000">
         <div class="filters div area" id="sustainSelectAlldiv">
             <input class="input filter selectAll content-detail" id="sustainSelectAll" value="" type="checkbox"
                    onclick="selectAll(this, 'areaChkList[]', 'form')"
@@ -135,50 +145,49 @@ function printFiltersAndReset($areaFilterSelected, $allAreas){
             >
             <label for="sustainSelectAll0" class="content-detail">All</label>
         </div>
-        <?php
-        foreach ($allAreas as $area) {
-            ?>
-            <div class="div area filter" id="area<?php echo $area["id"]; ?>">
-                <div class="div area filter chkbox" id="areaChkbox<?php echo $area["id"]; ?>">
-                    <input class="input area filter" id="input<?php echo $area["id"]; ?>"
-                           value="<?php echo $area["id"]; ?>" type="checkbox" name="areaChkList[]"
-                           onclick="checkSelectAll('sustainSelectAll', 'areaChkList', 'form')"
-                        <?php
-                        if (contain($areaFilterSelected, $area["id"])) {
-                            echo " checked='checked'";
-                        }
-                        ?>
-                    >
-                    <label class="label filter area"><?php echo $area["name"]; ?>&nbsp&nbsp&nbsp</label>
-                </div>
-                <div class='colorBlock' style='background-color:<?php echo $area["color"]; ?>;
-                        float: left'>
-                    &nbsp&nbsp&nbsp
-                </div>
-                <br>
-            </div>
-            <?php
-        }
-        ?>
-        <div class="div functionArea button reset" id="resetButton">
-            <input id="resetButton" type="image" src="refresh.svg" class="div functionArea button reset"
-                   height="30" width="30">
-        </div>
-        <!--
-        <div class="div functionArea button reset" id="resetButton">
-            <input type="submit" class="div functionArea button reset" id="resetButton"
-                   value="Reset">
-        </div>
-        -->
-    </form>
-    <!--
-    <div class="div functionArea button reset" id="resetButton">
-        <a class="input button href" id="resetButtonSubmit"
-           href="map.php" style="vertical-align: middle; line-height: 30px; text-decoration:none">
-            Reset All
-        </a>
+        <div class='colorBlock' style='background-color:#ffffff;float: left'>
+        &nbsp&nbsp&nbsp
     </div>
-    -->
+</div>
+<?php
+foreach ($allAreas as $area) {
+    ?>
+    <div class="div area filter" id="area<?php echo $area["id"]; ?>">
+        <div class="div area filter chkbox" id="areaChkbox<?php echo $area["id"]; ?>">
+            <input class="input area filter" id="input<?php echo $area["id"]; ?>"
+                   value="<?php echo $area["id"]; ?>" type="checkbox" name="areaChkList[]"
+                   onclick="checkSelectAll('sustainSelectAll', 'areaChkList', 'form')"
+                <?php
+                if (contain($areaFilterSelected, $area["id"])) {
+                    echo " checked='checked'";
+                }
+                ?>
+            >
+            <label class="label filter area"><?php echo $area["name"]; ?>&nbsp&nbsp&nbsp</label>
+        </div>
+        <div class='colorBlock' style='background-color:<?php echo $area["color"]; ?>;
+                float: left'>
+            &nbsp&nbsp&nbsp
+        </div>
+        <br>
+    </div>
+    <?php
+}
+?>
+<!--
+<div class="div functionArea button reset" id="resetButton">
+    <input type="submit" class="div functionArea button reset" id="resetButton"
+           value="Reset">
+</div>
+-->
+<!--
+<div class="div functionArea button reset" id="resetButton">
+    <a class="input button href" id="resetButtonSubmit"
+       href="map.php" style="vertical-align: middle; line-height: 30px; text-decoration:none">
+        Reset All
+    </a>
+</div>
+-->
 </div>
 <?php
 }

@@ -32,7 +32,8 @@ text {
 
 body {
     font-family: Verdana, sans-serif;
-    margin: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
     border: 1;
     font-size: 14px;
     font-weight: normal;
@@ -45,42 +46,35 @@ body {
 
 }
 
-.input.filter.selectAll.content-detail {
-    margin-bottom: 10px;
-    margin-left: 15px;
+.filters.div.title {
+    position: absolute;
+    margin-bottom: 20px;
 }
 
-/* put the color box next to the filter option */
+.filters.div.area {
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+/* place the color box next to the filter option */
 .div.area.filter.chkbox, .colorBlock {
     margin-bottom: 10px;
     display: inline-block;
 }
 
-/*
-.div.area.filter.chkbox {
-  margin-left:-15px;
+.filters.div.area, .div.area.filter.chkbox {
+    margin-left: -115px;
 }
+
 .colorBlock {
-  margin-left:100px;
+    margin-left: 115px;
 }
-*/
 
-/*
-.div.area.filter { display: table; }
-.div.area.filter.chkbox  { display: table-footer-group; }
-.colorBlock { display: table-header-group; }
-*/
 
-/* put filters and map display side by side  */
-
+/* make filters and map display side by side  */
 .filters.div, .div.map {
     margin-top: 20px;
     display: inline-block;
-}
-
-#filterDiv {
-    float: left;
-    width: 15%;
 }
 
 .map.div.title, .filters.div.title {
@@ -89,9 +83,23 @@ body {
     font-weight: bold;
 }
 
+
+/* place the refresh button to top-right */
+.div.functionArea.button.reset {
+    position: absolute;
+    margin-left: 395px; /* 60% */
+    margin-top: -3px;
+}
+
+.map.div.d3Area {
+    position:absolute;
+    padding-top: 20px;
+}
+
 .div.map {
-    float: right;
-    width: 85%;
+    position: absolute;
+    width: 100%;
+    padding-left: 3%;
 }
 
 svg {
