@@ -11,7 +11,7 @@
  Target Server Version : 50633
  File Encoding         : utf-8
 
- Date: 11/30/2016 17:38:52 PM
+ Date: 12/01/2016 13:11:33 PM
 */
 
 SET NAMES utf8mb4;
@@ -74,7 +74,7 @@ CREATE TABLE `person` (
 --  Records of `person`
 -- ----------------------------
 BEGIN;
-INSERT INTO `person` VALUES ('16', '111', 'Anne Rogers', '8', '3', null, 'anne.rogers@gatech.edu', null, 'https://goo.gl/Kv4bTd'), ('17', '107', 'Elizabeth Schultz', '5', '1', '', 'eshultz34@gatech.edu', 'linkedin.com/in/elizabethschultz5', 'https://goo.gl/Go5HkZ'), ('18', '112', 'Monica Halka', '4', '2', null, 'halka@gatech.edu', null, 'https://goo.gl/GbcsKg'), ('19', '108', 'Brian Schmatz', '3', '1', '(404)336-8232', 'bs004@gatech.edu', 'linkedin.com/in/brianschmatz', 'https://goo.gl/vWAMUe'), ('20', '109', 'Nicole Kennard', '6', '1', '(772)920-9273', 'n.kennard@gatech.edu', 'linkedin.com/in/nicolekennard', 'https://goo.gl/Pk595q'), ('21', '110', 'Rebecca Watts Hull', '7', '1', '(743)983-9302', 'hwrebacca@gatech.edu', null, 'https://goo.gl/tTgle6'), ('22', '113', 'Drew Cutright', '8', '3', '(404)242-8203', 'drew.cutright@carnegie.gatech.edu', null, 'https://goo.gl/aHqWts'), ('23', '114', 'Nicolas Palfrey', '8', '3', '(404)894-6974', 'nicolas.palfrey@facilities.gatech.edu', null, 'https://goo.gl/aHqWts'), ('24', '106', 'Felix Tener', '8', '1', null, 'felixtr@gmail.com', 'https://goo.gl/cgnj3l', 'https://goo.gl/rFFqJA'), ('25', '105', 'Xiaoqin Zhu', '8', '1', '(854)339-2912', 'xzhu309@gatech.edu', '', 'https://goo.gl/aHqWts'), ('26', '104', 'Aoyi Li', '8', '1', '(794)291-3310', 'liaoyi920828@gmail.com', null, 'https://goo.gl/RHNJBn'), ('27', '104', 'Yuyang He', '8', '1', null, 'yuyang.he@gatech.edu', null, 'https://goo.gl/aHqWts');
+INSERT INTO `person` VALUES ('16', '111', 'Anne Rogers', '8', '3', null, 'anne.rogers@sustain.gatech.edu', null, 'https://goo.gl/Kv4bTd'), ('17', '107', 'Elizabeth Schultz', '5', '1', '', 'elizabeth.s.schultz@gmail.com', 'linkedin.com/in/elizabethschultz5', 'https://goo.gl/Go5HkZ'), ('18', '112', 'Monica Halka', '4', '2', null, 'monica.halka@carnegie.gatech.edu', null, 'https://goo.gl/GbcsKg'), ('19', '108', 'Brian Schmatz', '3', '1', '', 'bschmatz@gatech.edu', 'linkedin.com/in/brianschmatz', 'https://goo.gl/vWAMUe'), ('20', '109', 'Nicole Kennard', '6', '1', '', 'nicolejjk.17@gmail.com', 'linkedin.com/in/nicolekennard', 'https://goo.gl/Pk595q'), ('21', '110', 'Rebecca Watts Hull', '7', '1', '', 'rwattshull@gatech.edu', null, 'https://goo.gl/tTgle6'), ('22', '113', 'Drew Cutright', '8', '3', '', 'drew.cutright@carnegie.gatech.edu', null, 'https://goo.gl/aHqWts'), ('23', '114', 'Nicolas Palfrey', '8', '3', '', 'nicolas.palfrey@facilities.gatech.edu', null, 'https://goo.gl/aHqWts'), ('24', '106', 'Felix Tener', '8', '1', null, 'felixtr@gmail.com', 'https://goo.gl/cgnj3l', 'https://goo.gl/rFFqJA'), ('25', '105', 'Xiaoqin Zhu', '8', '1', '', 'xzhu309@gatech.edu', '', 'https://goo.gl/aHqWts'), ('26', '104', 'Aoyi Li', '8', '1', '', 'liaoyi920828@gmail.com', null, 'https://goo.gl/RHNJBn'), ('27', '104', 'Yuyang He', '8', '1', null, 'yuyang.he@gatech.edu', null, 'https://goo.gl/aHqWts');
 COMMIT;
 
 -- ----------------------------
